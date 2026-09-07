@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore prime numbers and the Euclidean algorithm with clear, step-by-step calculations.">
+  <title>Number Theory Calculator</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232c6049'/%3E%3Ctext x='12' y='46' font-size='43' fill='white'%3E%E2%88%91%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="index.html"><span class="brand-mark">∑</span> The Mathematics Lab</a><span class="project-label">COLLEGE MATHEMATICS PROJECT</span></header>
+  <main>
+    <section class="hero"><p class="eyebrow">EXPLORE · CALCULATE · UNDERSTAND</p><h1>NUMBER THEORY<br><span>CALCULATOR</span></h1><p class="subtitle">Prime Number Testing using √n and GCD using the Euclidean Algorithm</p><p class="intro">Go beyond the answer. See the mathematics, one step at a time.</p><span class="hero-symbol" aria-hidden="true">√n</span></section>
+    <nav class="tabs" aria-label="Choose a calculator"><button id="prime-tab" class="active" aria-pressed="true" aria-controls="prime-panel">01 <span>Prime Number Checker</span></button><button id="gcd-tab" aria-pressed="false" aria-controls="gcd-panel">02 <span>Euclidean GCD Calculator</span></button></nav>
+    <section id="prime-panel" aria-labelledby="prime-heading" class="workspace">
+      <div class="calculator card"><p class="eyebrow">PRIMALITY TEST</p><h2 id="prime-heading">Prime Number Checker <span>— √n Method</span></h2><p>Is your number prime? Let’s find out together.</p>
+        <form id="prime-form" novalidate><label for="prime-number">Enter an integer</label><input id="prime-number" type="text" inputmode="numeric" placeholder="Enter a number, e.g. 37" aria-describedby="prime-hint prime-error" autocomplete="off"><p class="hint" id="prime-hint">Whole numbers from 0 to 1,000,000,000,000.</p><p class="error" id="prime-error" role="alert"></p><div class="actions"><button class="primary" type="submit">Check Prime <span aria-hidden="true">↗</span></button><button type="reset" class="secondary">Reset</button></div></form>
+        <div class="examples"><span>Try an example</span><button data-prime="37">37</button><button data-prime="49">49</button><button data-prime="97">97</button></div>
+      </div>
+      <aside class="theory card"><p class="eyebrow">THE IDEA BEHIND IT</p><h3>Why do we only<br>check until √n?</h3><div class="formula">n = a × b</div><p>If n is composite, it has a pair of factors a and b. If both were greater than √n, then <strong>a × b &gt; n</strong> — impossible.</p><p>At least one factor must be ≤ √n. For n ≥ 2, if no integer from 2 to √n divides n, <strong>the number is prime.</strong></p><div class="theory-note">A smaller search. The same certainty.</div></aside>
+      <section class="results" aria-label="Prime calculation"><div class="section-title"><h3>Your calculation</h3><span>STEP BY STEP</span></div><p id="prime-status" class="sr-only" role="status"></p><div id="prime-result"><div class="empty card"><span aria-hidden="true">√</span><h3>A little curiosity starts here.</h3><p>Enter a number to see its complete calculation.</p></div></div></section>
+    </section>
+    <section id="gcd-panel" aria-labelledby="gcd-heading" class="workspace" hidden>
+      <aside class="theory card gcd-theory"><p class="eyebrow">THE IDEA BEHIND IT</p><h3>How the Euclidean Algorithm Works</h3><div class="formula">a = bq + r</div><p>a = dividend · b = divisor<br>q = quotient · r = remainder</p><ol><li>Take two positive integers.</li><li>Put the larger number first.</li><li>Divide it by the smaller number.</li><li>Find the quotient and remainder.</li><li>Replace the larger number by the smaller.</li><li>Replace the smaller by the remainder.</li><li>Repeat the division.</li><li>Stop when the remainder is zero.</li><li>The last non-zero remainder is the GCD (or the final divisor if the first remainder is zero).</li></ol></aside>
+      <div class="calculator card gcd-calculator"><p class="eyebrow">GREATEST COMMON DIVISOR</p><h2 id="gcd-heading">GCD Calculator <span>— Euclidean Algorithm</span></h2><p>Two integers. One shared greatest divisor.</p><form id="gcd-form" novalidate><div class="input-pair"><div><label for="gcd-a">First Number</label><input id="gcd-a" type="text" inputmode="numeric" placeholder="e.g. 252" aria-describedby="gcd-hint gcd-error"></div><div><label for="gcd-b">Second Number</label><input id="gcd-b" type="text" inputmode="numeric" placeholder="e.g. 105" aria-describedby="gcd-hint gcd-error"></div></div><p id="gcd-hint" class="hint">Up to 15 digits each. Negative integers use their absolute values.</p><p id="gcd-error" class="error" role="alert"></p><div class="actions"><button class="primary" type="submit">Find GCD <span aria-hidden="true">↗</span></button><button class="secondary" type="reset">Reset</button></div></form><div class="examples"><span>Try an example</span><button data-gcd="252,105">252, 105</button><button data-gcd="48,18">48, 18</button></div></div>
+      <section class="results" aria-label="GCD calculation"><div class="section-title"><h3>Your calculation</h3><span>STEP BY STEP</span></div><p id="gcd-status" class="sr-only" role="status"></p><div id="gcd-result"><div class="empty card"><span aria-hidden="true">÷</span><h3>Find the common ground.</h3><p>Enter two numbers to follow the Euclidean algorithm.</p></div></div></section>
+    </section>
+    <footer><span>∑ &nbsp; Number Theory Calculator</span><span>Made for learning. Built on mathematics.</span></footer>
+  </main>
+</body>
+</html>
