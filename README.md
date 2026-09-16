@@ -1,26 +1,36 @@
-# Number Theory Calculator
+# RSA Number Theory Lab
 
 ## Project Description
-A static college mathematics project demonstrating prime number checking using √n and GCD calculation using the Euclidean Algorithm. Both tools show the complete calculation, accept Enter to submit, and include working examples and reset buttons. Responsive layouts, labels, keyboard controls, status announcements, and reduced-motion support are included.
 
-## Prime Number Algorithm
-For n ≥ 2, test every integer divisor from 2 to floor(√n), stopping at the first exact divisor. If none divides n, it is prime. A composite n = a × b must have at least one factor ≤ √n, because if both factors were larger their product would exceed n.
+This project demonstrates the use of Number Theory in RSA-style public-key encryption. Users verify two primes, generate valid key pairs, encrypt a short ASCII message, and decrypt it while viewing the calculations that produced every result.
 
-0 and 1 are neither prime nor composite. Negative and non-integer prime inputs are rejected. Prime inputs are limited to 10^12. Every tested divisor is available; long calculations use pages of 500 rows to keep phones responsive.
+## Mathematical Concepts
 
-## Euclidean Algorithm
-Put the larger absolute value first. Use a = bq + r, then replace a by b and b by r until b is zero. The final non-zero divisor is the GCD. Display each quotient, remainder, equation, and replacement. Negative inputs use absolute values. GCD(a, 0) = |a|; GCD(0, 0) is rejected because there is no greatest positive common divisor. Inputs accept up to 15 digits for exact integer arithmetic.
+- Prime Numbers
+- √n Prime Testing
+- GCD
+- Euclidean Algorithm
+- Extended Euclidean Algorithm
+- Modular Arithmetic
+- Euler's Totient
+- Modular Exponentiation by repeated squaring
+
+## Application
+
+Educational secure-message encryption demonstration. Prime inputs are restricted to 2–10,000 so the calculations remain suitable for a college presentation. RSA arithmetic uses JavaScript `BigInt`.
 
 ## Technologies
-HTML5, CSS3, vanilla JavaScript, Git, GitHub, and Vercel. No framework, packages, backend, database, external fonts, or runtime APIs.
+
+HTML5, CSS3, and vanilla JavaScript. The website has no framework, backend, database, external API, build step, or runtime dependency.
 
 ## Running Locally
-Open index.html in a browser. No installation or build is needed. Optionally serve this folder using `python -m http.server 8000`.
 
-## Testing
-Run `node test.js` for repeatable arithmetic and validation checks. Node is only an optional test runner, never a website backend. Browser checks cover submitting both forms, input errors, examples, reset, tab switching, full calculation steps, mobile overflow, reload, and console errors.
+Open `index.html` directly in a current browser. No installation is required. Run `node test.js` for the mathematical checks.
 
 ## Deployment
-Live website: https://number-theory-calculator.vercel.app/
 
-Deploy the repository to Vercel with framework preset **Other**, no build command, and the project root as output. All assets use relative paths and work locally or on the deployed homepage. No vercel.json is necessary.
+Vercel serves the static files directly at https://number-theory-calculator.vercel.app/.
+
+## Disclaimer
+
+This implementation uses small values for educational demonstration and must not be used for production cryptography, banking, passwords, or sensitive communication. Real RSA requires large keys, secure padding, and audited cryptographic libraries.

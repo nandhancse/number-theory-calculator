@@ -3,31 +3,85 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Explore prime numbers and the Euclidean algorithm with clear, step-by-step calculations.">
-  <title>Number Theory Calculator</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232c6049'/%3E%3Ctext x='12' y='46' font-size='43' fill='white'%3E%E2%88%91%3C/text%3E%3C/svg%3E">
+  <meta name="description" content="An interactive educational RSA demonstration using prime numbers, Euclidean algorithms and modular arithmetic.">
+  <title>RSA Number Theory Lab · Group 2</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23081721'/%3E%3Ctext x='14' y='45' font-size='38' fill='%236ee7f2'%3ER%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <script src="script.js?v=2" defer></script>
 </head>
 <body>
-  <header class="topbar"><a class="brand" href="index.html"><span class="brand-mark">∑</span> Group 2</a><span class="project-label">COLLEGE MATHEMATICS PROJECT</span></header>
-  <main>
-    <section class="hero"><p class="eyebrow">EXPLORE · CALCULATE · UNDERSTAND</p><h1>NUMBER THEORY<br><span>CALCULATOR</span></h1><p class="subtitle">Prime Number Testing using √n and GCD using the Euclidean Algorithm</p><p class="intro">Go beyond the answer. See the mathematics, one step at a time.</p><span class="hero-symbol" aria-hidden="true">√n</span></section>
-    <nav class="tabs" aria-label="Choose a calculator"><button id="prime-tab" class="active" aria-pressed="true" aria-controls="prime-panel">01 <span>Prime Number Checker</span></button><button id="gcd-tab" aria-pressed="false" aria-controls="gcd-panel">02 <span>Euclidean GCD Calculator</span></button></nav>
-    <section id="prime-panel" aria-labelledby="prime-heading" class="workspace">
-      <div class="calculator card"><p class="eyebrow">PRIMALITY TEST</p><h2 id="prime-heading">Prime Number Checker <span>— √n Method</span></h2><p>Is your number prime? Let’s find out together.</p>
-        <form id="prime-form" novalidate><label for="prime-number">Enter an integer</label><input id="prime-number" type="text" inputmode="numeric" placeholder="Enter a number, e.g. 37" aria-describedby="prime-hint prime-error" autocomplete="off"><p class="hint" id="prime-hint">Whole numbers from 0 to 1,000,000,000,000.</p><p class="error" id="prime-error" role="alert"></p><div class="actions"><button class="primary" type="submit">Check Prime <span aria-hidden="true">↗</span></button><button type="reset" class="secondary">Reset</button></div></form>
-        <div class="examples"><span>Try an example</span><button data-prime="37">37</button><button data-prime="49">49</button><button data-prime="97">97</button></div>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Group 2 RSA Number Theory Lab"><span class="brand-mark">R</span><span>GROUP 2<small>NUMBER THEORY PROJECT</small></span></a>
+    <div class="top-actions"><button id="load-demo" class="button ghost" type="button">▶ Load demo</button><button id="reset-project" class="button danger" type="button">Reset project</button></div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div><p class="eyebrow">MATHEMATICS × CRYPTOGRAPHY</p><h1>RSA NUMBER<br><span>THEORY LAB</span></h1><p class="subtitle">Secure Message Encryption Using Prime Numbers, GCD and Modular Arithmetic</p><p>An interactive demonstration of how Number Theory is used in public-key cryptography.</p></div>
+      <div class="hero-lock" aria-hidden="true"><span>PUBLIC</span><strong>C = M<sup>e</sup> mod n</strong><i>↕</i><strong>M = C<sup>d</sup> mod n</strong><span>PRIVATE</span></div>
+    </section>
+
+    <aside class="security-note"><strong>Educational RSA demonstration</strong><p>This project demonstrates the mathematics behind RSA using small numbers for educational purposes. Real RSA systems use very large prime numbers and secure cryptographic libraries.</p></aside>
+
+    <nav class="workflow" aria-label="RSA process">
+      <a href="#primes"><b>01</b><span>Choose<br>p and q</span></a><i>→</i><a href="#keys"><b>02</b><span>Generate<br>keys</span></a><i>→</i><a href="#encrypt"><b>03</b><span>Encrypt<br>message</span></a><i>→</i><a href="#decrypt"><b>04</b><span>Decrypt<br>ciphertext</span></a>
+    </nav>
+
+    <section id="primes" class="lab-section">
+      <div class="section-heading"><span>01</span><div><p class="eyebrow">FOUNDATION</p><h2>Select & verify prime numbers</h2><p>Choose two distinct primes. We prove each one using trial division only up to √n.</p></div><span id="prime-badge" class="badge">Waiting</span></div>
+      <div class="two-column">
+        <form id="prime-form" class="card control-card" novalidate>
+          <div class="input-grid"><div><label for="prime-p">Prime number p</label><input id="prime-p" inputmode="numeric" value="17" aria-describedby="prime-error" autocomplete="off"></div><div><label for="prime-q">Prime number q</label><input id="prime-q" inputmode="numeric" value="19" aria-describedby="prime-error" autocomplete="off"></div></div>
+          <p class="hint">Enter distinct whole numbers from 2 to 10,000.</p><p id="prime-error" class="error" role="alert"></p>
+          <button class="button primary wide" type="submit">Verify prime numbers <span>→</span></button>
+          <div class="examples"><span>Example pairs</span><button type="button" data-pair="11,13">11 & 13</button><button type="button" data-pair="17,19">17 & 19</button><button type="button" data-pair="19,23">19 & 23</button><button type="button" data-pair="23,29">23 & 29</button></div>
+        </form>
+        <details class="card why-card"><summary>Why do we check only up to √n?</summary><div class="equation">n = a × b</div><p>If both factors a and b were greater than √n, their product would be greater than n, which is impossible. Therefore a composite number has at least one factor ≤ √n.</p><p>If no integer up to √n divides n, then n is prime.</p></details>
       </div>
-      <aside class="theory card"><p class="eyebrow">THE IDEA BEHIND IT</p><h3>Why do we only<br>check until √n?</h3><div class="formula">n = a × b</div><p>If n is composite, it has a pair of factors a and b. If both were greater than √n, then <strong>a × b &gt; n</strong> — impossible.</p><p>At least one factor must be ≤ √n. For n ≥ 2, if no integer from 2 to √n divides n, <strong>the number is prime.</strong></p><div class="theory-note">A smaller search. The same certainty.</div></aside>
-      <section class="results" aria-label="Prime calculation"><div class="section-title"><h3>Your calculation</h3><span>STEP BY STEP</span></div><p id="prime-status" class="sr-only" role="status"></p><div id="prime-result"><div class="empty card"><span aria-hidden="true">√</span><h3>A little curiosity starts here.</h3><p>Enter a number to see its complete calculation.</p></div></div></section>
+      <div id="prime-steps" class="steps empty-state"><p>Prime verification steps will appear here.</p></div>
     </section>
-    <section id="gcd-panel" aria-labelledby="gcd-heading" class="workspace" hidden>
-      <aside class="theory card gcd-theory"><p class="eyebrow">THE IDEA BEHIND IT</p><h3>How the Euclidean Algorithm Works</h3><div class="formula">a = bq + r</div><p>a = dividend · b = divisor<br>q = quotient · r = remainder</p><ol><li>Take two positive integers.</li><li>Put the larger number first.</li><li>Divide it by the smaller number.</li><li>Find the quotient and remainder.</li><li>Replace the larger number by the smaller.</li><li>Replace the smaller by the remainder.</li><li>Repeat the division.</li><li>Stop when the remainder is zero.</li><li>The last non-zero remainder is the GCD (or the final divisor if the first remainder is zero).</li></ol></aside>
-      <div class="calculator card gcd-calculator"><p class="eyebrow">GREATEST COMMON DIVISOR</p><h2 id="gcd-heading">GCD Calculator <span>— Euclidean Algorithm</span></h2><p>Two integers. One shared greatest divisor.</p><form id="gcd-form" novalidate><div class="input-pair"><div><label for="gcd-a">First Number</label><input id="gcd-a" type="text" inputmode="numeric" placeholder="e.g. 252" aria-describedby="gcd-hint gcd-error"></div><div><label for="gcd-b">Second Number</label><input id="gcd-b" type="text" inputmode="numeric" placeholder="e.g. 105" aria-describedby="gcd-hint gcd-error"></div></div><p id="gcd-hint" class="hint">Up to 15 digits each. Negative integers use their absolute values.</p><p id="gcd-error" class="error" role="alert"></p><div class="actions"><button class="primary" type="submit">Find GCD <span aria-hidden="true">↗</span></button><button class="secondary" type="reset">Reset</button></div></form><div class="examples"><span>Try an example</span><button data-gcd="252,105">252, 105</button><button data-gcd="48,18">48, 18</button></div></div>
-      <section class="results" aria-label="GCD calculation"><div class="section-title"><h3>Your calculation</h3><span>STEP BY STEP</span></div><p id="gcd-status" class="sr-only" role="status"></p><div id="gcd-result"><div class="empty card"><span aria-hidden="true">÷</span><h3>Find the common ground.</h3><p>Enter two numbers to follow the Euclidean algorithm.</p></div></div></section>
+
+    <section id="keys" class="lab-section locked" aria-labelledby="keys-title">
+      <div class="section-heading"><span>02</span><div><p class="eyebrow">KEY GENERATION</p><h2 id="keys-title">Build the public & private keys</h2><p>Calculate n and φ(n), choose a coprime exponent e, then find its modular inverse d.</p></div><span id="key-badge" class="badge">Locked</span></div>
+      <div id="totient-output" class="math-grid empty-state"><p>Verify p and q to unlock key generation.</p></div>
+      <form id="exponent-form" class="card exponent-card" novalidate>
+        <div><label for="exponent-e">Encryption exponent e</label><input id="exponent-e" inputmode="numeric" placeholder="Enter e or find one automatically" disabled aria-describedby="e-error"></div>
+        <button id="use-e" class="button secondary" type="submit" disabled>Check this e</button><button id="find-e" class="button primary" type="button" disabled>Find valid e</button>
+        <p id="e-error" class="error" role="alert"></p>
+      </form>
+      <div id="gcd-output" class="steps empty-state"><p>Euclidean GCD and modular inverse steps will appear here.</p></div>
+      <div id="key-output"></div>
     </section>
-    <footer><span>∑ &nbsp; Number Theory Calculator</span><span>Made for learning. Built on mathematics.</span></footer>
+
+    <section id="encrypt" class="lab-section locked" aria-labelledby="encrypt-title">
+      <div class="section-heading"><span>03</span><div><p class="eyebrow">PUBLIC KEY OPERATION</p><h2 id="encrypt-title">Encrypt a message</h2><p>Each character becomes a number M, then ciphertext C = M<sup>e</sup> mod n.</p></div><span id="encrypt-badge" class="badge">Locked</span></div>
+      <form id="message-form" class="card message-card" novalidate><div><label for="message">Short ASCII message</label><input id="message" maxlength="40" placeholder="e.g. HELLO" disabled aria-describedby="message-hint message-error"><p id="message-hint" class="hint">Maximum 40 basic ASCII characters. Every character code must be less than n.</p><p id="message-error" class="error" role="alert"></p></div><button class="button primary" type="submit" disabled>Encrypt message</button></form>
+      <div id="encrypt-output" class="steps empty-state"><p>Encryption calculations will appear here.</p></div>
+    </section>
+
+    <section id="decrypt" class="lab-section locked" aria-labelledby="decrypt-title">
+      <div class="section-heading"><span>04</span><div><p class="eyebrow">PRIVATE KEY OPERATION</p><h2 id="decrypt-title">Decrypt the ciphertext</h2><p>Use M = C<sup>d</sup> mod n and convert each recovered number back to a character.</p></div><span id="decrypt-badge" class="badge">Locked</span></div>
+      <button id="decrypt-button" class="button primary" type="button" disabled>Decrypt message</button>
+      <div id="decrypt-output" class="steps empty-state"><p>Decrypt an encrypted message to recover the original.</p></div>
+    </section>
+
+    <section class="lab-section theory-section">
+      <div class="section-heading"><span>05</span><div><p class="eyebrow">VIVA NOTES</p><h2>The mathematics behind RSA</h2><p>Open any card for a concise explanation you can present.</p></div></div>
+      <div class="theory-grid">
+        <details class="card"><summary>Prime Numbers</summary><p>A prime number is greater than 1 and has exactly two positive factors: 1 and itself. Distinct primes p and q make φ(pq) easy to calculate.</p></details>
+        <details class="card"><summary>√n Prime Testing</summary><p>A composite number has a factor no greater than its square root. Testing 2 through ⌊√n⌋ is therefore enough to prove primality.</p></details>
+        <details class="card"><summary>GCD & Euclidean Algorithm</summary><p>The GCD is the greatest positive divisor shared by two integers. Repeatedly apply a = bq + r until r = 0; the last non-zero remainder is the GCD.</p></details>
+        <details class="card"><summary>Coprime Numbers</summary><p>Two numbers are coprime when GCD(a, b) = 1. RSA requires e and φ(n) to be coprime so e has a modular inverse.</p></details>
+        <details class="card"><summary>Modular Arithmetic</summary><p>a mod n is the remainder after dividing a by n. Like a clock, values wrap around after reaching n. RSA uses this wrapping to keep powers within a fixed range.</p></details>
+        <details class="card"><summary>Euler’s Totient</summary><p>φ(n) counts positive integers below n that are coprime to n. For distinct primes p and q, φ(pq) = (p − 1)(q − 1).</p></details>
+        <details class="card"><summary>Public & Private Keys</summary><p>The public key (e, n) encrypts. The private key (d, n) decrypts. This lab shows both so the mathematics can be studied.</p></details>
+        <details class="card"><summary>Encryption & Decryption</summary><p>Encode a character as M. Encrypt C = M<sup>e</sup> mod n. Decrypt M = C<sup>d</sup> mod n. Because ed ≡ 1 mod φ(n), the original value is recovered.</p></details>
+      </div>
+    </section>
+
+    <section class="lab-section flow-section"><p class="eyebrow">COMPLETE WORKFLOW</p><div class="flow">Choose p, q <i>↓</i> Verify with √n <i>↓</i> n = pq <i>↓</i> φ(n) = (p−1)(q−1) <i>↓</i> Choose e <i>↓</i> GCD(e, φ) = 1 <i>↓</i> Find d <i>↓</i> Public (e,n) + Private (d,n) <i>↓</i> C = M<sup>e</sup> mod n <i>↓</i> M = C<sup>d</sup> mod n <i>↓</i> Message recovered</div></section>
   </main>
+  <footer><span>Group 2 · RSA Number Theory Lab</span><span>Educational mathematics project · Not production cryptography</span></footer>
+  <div id="status" class="sr-only" role="status" aria-live="polite"></div>
 </body>
 </html>

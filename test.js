@@ -1,20 +1,20 @@
-// Run with `node test.js`. No packages or backend required.
 const assert = require('node:assert/strict');
-const { validateInteger, primeCalculation, gcdCalculation } = require('./script.js');
-for (const n of [2, 3, 17, 37, 97, 997, 999983]) assert.equal(primeCalculation(n).prime, true, `${n} prime`);
-for (const n of [4, 49, 100, 121, 169, 1, 0, 1000000000000]) assert.equal(primeCalculation(n).prime, false, `${n} not prime`);
-assert.equal(primeCalculation(49).divisor, 7);
-assert.equal(primeCalculation(37).limit, 6);
-for (const value of ['-7', '5.5', '', 'abc', '2e3', 'Infinity', '9007199254740992']) assert.throws(() => validateInteger(value));
-assert.throws(() => validateInteger('1000000000001', 1e12));
-assert.equal(validateInteger(' +37 '), 37);
-for (const [a, b, answer] of [[252,105,21],[48,18,6],[18,48,6],[270,192,6],[17,13,1],[100,100,100],[10,0,10],[0,10,10],[54,24,6],[-48,18,6],[999999999999999,3,3]]) {
-  const result = gcdCalculation(a, b);
-  assert.equal(result.gcd, answer);
-  for (const s of result.steps) {
-    assert.equal(s.a, s.b * s.q + s.r);
-    assert.ok(s.r >= 0 && s.r < s.b);
-  }
+const { isPrimeSqrt, gcdEuclidean, gcdWithSteps, modInverse, modPow } = require('./script.js');
+
+for (const n of [2,3,11,13,17,19,97]) assert.equal(isPrimeSqrt(n).prime,true,`${n} prime`);
+for (const n of [0,1,4,49,121]) assert.equal(isPrimeSqrt(n).prime,false,`${n} composite/not prime`);
+assert.deepEqual(isPrimeSqrt(11).tests.map(x=>x.divisor),[2,3]);
+assert.deepEqual(isPrimeSqrt(49).tests.map(x=>x.divisor),[2,3,4,5,6,7]);
+for (const [a,b,g] of [[120n,7n,1n],[120n,8n,8n],[312n,5n,1n],[48n,18n,6n]]) {
+  assert.equal(gcdEuclidean(a,b),g);
+  for (const s of gcdWithSteps(a,b).steps) assert.equal(s.a,s.b*s.q+s.r);
 }
-assert.deepEqual(gcdCalculation(252,105).steps.map(s => s.r), [42,21,0]);
-console.log('All prime, GCD, validation, and equation checks passed.');
+const p=17n,q=19n,n=p*q,phi=(p-1n)*(q-1n),e=5n,d=modInverse(e,phi).inverse;
+assert.equal(n,323n); assert.equal(phi,288n); assert.equal(e*d%phi,1n);
+for (const message of ['HELLO','MATH','RSA','NUMBER THEORY']) {
+  const cipher=[...message].map(c=>modPow(BigInt(c.codePointAt(0)),e,n));
+  const recovered=cipher.map(c=>String.fromCodePoint(Number(modPow(c,d,n)))).join('');
+  assert.equal(recovered,message);
+}
+assert.equal(modPow(72n,e,n),21n);
+console.log(`All RSA checks passed: n=${n}, phi=${phi}, e=${e}, d=${d}.`);
